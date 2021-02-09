@@ -15,5 +15,6 @@ urlpatterns = [
 
     path('accounts/', include([
         path('profile/', views.ProfileView.as_view(), name='profile'),
+        path('mytests/', views.MyTestsView.as_view(), name='mytests'),
     ])),
 ]

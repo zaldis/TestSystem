@@ -24,9 +24,7 @@
                     <button type="submit" class="btn btn-primary">Create test</button>
                 </form>
 
-                <form method="GET" action="#">
-                    <button type="submit" class="btn btn-primary">My tests</button>
-                </form>
+                <button type="submit" class="btn btn-primary" onclick="loadTests()">My tests</button>
 
                 <form method="GET" action="/accounts/profile">
                     <button type="submit" class="btn btn-primary">Profile</button>
@@ -42,6 +40,7 @@
             {% block content %} {% endblock %}
         </div>
 
+
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
@@ -53,5 +52,20 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
                 integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
                 crossorigin="anonymous"></script>
+
+        <!-- JQuery/Ajax -->
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+
+        <script>
+            function getTimeZone() {
+                return Intl.DateTimeFormat().resolvedOptions().timeZone;
+            }
+
+            function loadTests() {
+                const url = `{% url 'mytests' %}?client_zone=${getTimeZone()}`
+                window.location.href = url;
+            }
+        </script>
     </body>
 </html>

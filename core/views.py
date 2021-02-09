@@ -1,12 +1,12 @@
-from django import dispatch
 from django.http.response import Http404, HttpResponse
-from core.models import UserDetail
+from core.models import Test, UserDetail
 from django.contrib.auth.views import logout_then_login
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import TemplateView, FormView
+from django.views.generic import TemplateView, FormView, ListView
 from django.views import View
 
 from .forms import ProfileForm
+from .mixins import ClientZoneMixin
 
 
 class HomeView(TemplateView):
@@ -52,6 +52,12 @@ class ProfileMediaView(LoginRequiredMixin, View):
             response['Content-Type'] = 'image'
             return response
         raise Http404("You don't have permissions to others profile data")
+
+
+class MyTestsView(LoginRequiredMixin, ClientZoneMixin, ListView):
+    model = Test
+    context_object_name = 'tests'
+    template_name = 'accounts/mytests.html'
 
 
 def logout(request):

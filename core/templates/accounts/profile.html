@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} Profile {% endblock %}
+
+
+{% block content %}
+
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        {{ profile_img }}
+        <div class="row">
+            <img src="{{ MEDIA_URL }}{{ user_details.profile_img.name}}"
+                 class="rounded mx-auto d-block" width="300px" height="300px" alt="logo">
+        </div>
+
+        <div class="row">
+            <div class="col align-self-end">
+                <div>{{ form.profile_img.errors }}</div>
+                <div class="form-group">
+                    <input id="profile_img" name="profile_img" type="file" class="form-control">
+                </div>
+            </div>
+        </div>
+        <hr />
+
+        <div class="row">
+            <div class="col">
+                <div>{{ form.first_name.errors }}</div>
+                <div class="form-group">
+                    <label for="first_name" class="custom-control-label">First name</label>
+                    <input id="first_name" name="first_name" type="text" class="form-control" placeholder="First name" value="{{ user.first_name }}">
+                </div>
+            </div>
+            <div class="col">
+                <div>{{ form.last_name.errors }}</div>
+                <div class="form-group">
+                    <label for="last_name" class="custom-control-label">Last name</label>
+                    <input id="last_name" name="last_name" type="text" class="form-control" placeholder="Last name" value="{{ user.last_name }}">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="birthday" class="custom-control-label">Brithday</label>
+                    <input id="birthday" name="birthday" type="date" class="form-control" value="{{ user_details.birthday | date:"Y-m-d" }}" />
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div>{{ form.about_me.errors }}</div>
+                <div class="form-group">
+                    <label for="about_me" class="custom-control-label">About me</label>
+                    <textarea id="about_me" name="about_me" class="form-control" placeholder="About me">{{ user_details.about_me }}</textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    </form>
+{% endblock %}

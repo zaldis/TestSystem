@@ -8,3 +8,7 @@ class ProfileForm(forms.Form):
     about_me = forms.CharField(max_length=1000)
     profile_img = forms.ImageField(required=False)
 
+
+class CommentForm(forms.Form):
+    test_id = forms.IntegerField()
+    text = forms.CharField()

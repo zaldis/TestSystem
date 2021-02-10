@@ -67,9 +67,13 @@
 
         <tbody>
             {% for test in tests %}
-                <tr>
+                <tr onclick="openTestDetails({{ test.id }})">
                     <td>{{ test.id }}</td>
-                    <td>{{ test.title }}</td>
+                    <td>
+                        <a href="{% url 'mytest_details' test.id %}">
+                            {{ test.title }}
+                        </a>
+                    </td>
                     <td>{% if test.passes > 0 %}+{% else %}-{% endif %}</td>
                     <td>{{ test.creation_date|timezone:client_zone|date:"Y-m-d H:i" }}</td>
                 </tr>

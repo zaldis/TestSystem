@@ -1,11 +1,13 @@
-from django.http.response import Http404, HttpResponse
-from core.models import Test, UserDetail
-from django.contrib.auth.views import logout_then_login
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import TemplateView, FormView, ListView
+from django.contrib.auth.views import logout_then_login
+from django.http.response import Http404, HttpResponse
+from django.shortcuts import redirect
+from django.urls.base import reverse, reverse_lazy
+from django.views.generic import TemplateView, FormView, ListView, DetailView
 from django.views import View
 
-from .forms import ProfileForm
+from core.models import Comment, Test, UserDetail
+from .forms import CommentForm, ProfileForm
 from .mixins import ClientZoneMixin
 
 
@@ -74,6 +76,39 @@ class MyTestsView(LoginRequiredMixin, ClientZoneMixin, ListView):
             result = result.order_by('creation_date')
 
         return result
+
+
+class MyTestDetailsView(LoginRequiredMixin, DetailView):
+    model = Test
+    context_object_name = 'test'
+    template_name = 'accounts/test_details.html'
+
+    def get_context_data(self, **kwargs):
+        comments = self.object.comment_set.all().order_by('-creation_date')
+        context = super().get_context_data(**kwargs)
+        context['comments'] = comments
+        return context
+
+
+class CommentView(LoginRequiredMixin, FormView):
+    form_class = CommentForm
+    success_url = '/accounts/profile'
+    template_name = 'accounts/test_details.html'
+
+    def form_valid(self, form):
+        super().form_valid(form)
+        Comment.objects.create(
+            test_id=form.cleaned_data['test_id'],
+            text=form.cleaned_data['text']
+        )
+
+    def post(self, request, *args, **kwargs):
+        super().post(request, *args, **kwargs)
+
+        test_id = self.request.POST['test_id']
+        return redirect(
+            reverse('mytest_details', args=(test_id, ))
+        )
 
 
 def logout(request):

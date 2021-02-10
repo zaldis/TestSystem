@@ -42,3 +42,12 @@ class Answer(models.Model):
 
     def __str__(self):
         return f"{self.question}: {self.text}"
+
+
+class Comment(models.Model):
+    test = models.ForeignKey(Test, on_delete=CASCADE)
+    text = models.TextField()
+    creation_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.test.title}: {self.creation_date}"

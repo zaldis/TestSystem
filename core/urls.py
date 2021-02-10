@@ -1,3 +1,4 @@
+from core.views import CommentView
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
 
@@ -15,6 +16,10 @@ urlpatterns = [
 
     path('accounts/', include([
         path('profile/', views.ProfileView.as_view(), name='profile'),
-        path('mytests/', views.MyTestsView.as_view(), name='mytests'),
+        path('mytests/', include([
+            path('', views.MyTestsView.as_view(), name='mytests'),
+            path('<int:pk>/', views.MyTestDetailsView.as_view(), name='mytest_details'),
+            path('comment/', views.CommentView.as_view(), name='comment')
+        ])),
     ])),
 ]

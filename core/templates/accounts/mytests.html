@@ -7,12 +7,61 @@
 {% block content %}
     <h1>List of tests</h1>
 
-    {{ locale }}
+    <hr />
+    <form enctype="multipart/form-data">
+        <div class="row">
+            <div class="col">
+                <div class="form-check">
+                    <input type="checkbox" id="is_passed" name="is_passed"
+                           class="form-check-input">
+                    <label for="is_passed" class="form-check-label">Is passed</label>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="form-check">
+                    <input type="checkbox" id="sort" name="sort"
+                           class="form-check-input">
+                    <label for="sort" class="form-check-label">
+                        Sort by creation date</label>
+                </div>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="search" class="form-label">Search by title</label>
+                    <input type="text" id="search" name="search" class="form-control">
+                </div>
+            </div>
+        </div>
+
+        <input type="hidden" name="client_zone" class="timezone">
+
+        <div class="row">
+            <div class="col-6">
+                <button type="submit" class="btn btn-success" style="width: 100%;">
+                    Filter
+                </button>
+            </div>
+
+            <div class="col-6">
+                <button type="reset" class="btn btn-danger" style="width: 100%;">
+                    Clean
+                </button>
+            </div>
+        </div>
+    <form>
+    <hr />
+
     <table class="table table-hover">
         <thead>
             <th>ID</th>
             <th>Title</th>
-            <th>Passes</th>
+            <th>Is passed</th>
             <th>Creation date</th>
         </thead>
 

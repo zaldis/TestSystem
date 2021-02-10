@@ -24,13 +24,16 @@
                     <button type="submit" class="btn btn-primary">Create test</button>
                 </form>
 
-                <button type="submit" class="btn btn-primary" onclick="loadTests()">My tests</button>
+                <form action="{% url 'mytests' %}">
+                    <input type="hidden" name="client_zone" class="timezone">
+                    <button type="submit" class="btn btn-primary">My tests</button>
+                </form>
 
-                <form method="GET" action="/accounts/profile">
+                <form action="{% url 'profile' %}">
                     <button type="submit" class="btn btn-primary">Profile</button>
                 </form>
 
-                <form method="GET" action="/logout">
+                <form action="{% url 'logout' %}">
                     <button type="submit" class="btn btn-primary">Log out</button>
                 </form>
             </div>
@@ -66,6 +69,13 @@
                 const url = `{% url 'mytests' %}?client_zone=${getTimeZone()}`
                 window.location.href = url;
             }
+
+            $(function() {
+                const client_zone = getTimeZone();
+                $('.timezone').val(client_zone);
+            });
         </script>
+
+        {% block scripts %} {% endblock %}
     </body>
 </html>

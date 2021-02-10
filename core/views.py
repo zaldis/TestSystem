@@ -59,6 +59,22 @@ class MyTestsView(LoginRequiredMixin, ClientZoneMixin, ListView):
     context_object_name = 'tests'
     template_name = 'accounts/mytests.html'
 
+    def get_queryset(self):
+        result = super().get_queryset().order_by('-creation_date')
+
+        search = self.request.GET.get('search', '')
+        result = result.filter(title__icontains=search)
+
+        is_passed = self.request.GET.get('is_passed', 'off') == 'on'
+        if is_passed:
+            result = result.filter(passes__gte=1)
+
+        sort_by_asc = self.request.GET.get('sort', 'off') == 'on'
+        if sort_by_asc:
+            result = result.order_by('creation_date')
+
+        return result
+
 
 def logout(request):
     return logout_then_login(request)

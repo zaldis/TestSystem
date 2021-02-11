@@ -20,7 +20,7 @@
             <div style="display: flex">
                 <span>Hello, {{ user.username }}</span>
 
-                <form method="GET" action="#">
+                <form action="{% url 'create_test' %}">
                     <button type="submit" class="btn btn-primary">Create test</button>
                 </form>
 

@@ -1,4 +1,6 @@
+from core.models import Question, Test
 from django import forms
+from django.forms import formset_factory
 
 
 class ProfileForm(forms.Form):
@@ -12,3 +14,18 @@ class ProfileForm(forms.Form):
 class CommentForm(forms.Form):
     test_id = forms.IntegerField()
     text = forms.CharField()
+
+
+class QuestionForm(forms.ModelForm):
+    class Meta:
+        model = Question
+        exclude = ('test', )
+
+QuestionFormSet = formset_factory(QuestionForm, min_num=5)
+
+
+class TestForm(forms.ModelForm):
+    class Meta:
+        model = Test
+        exclude = ('passes', 'state', )
+

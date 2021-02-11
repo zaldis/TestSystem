@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+    <h1> Creating test:</h1>
+
+    <h2> Enter questions: </h2>
+
+    {% for question in questions %}
+        <div><a href="{% url 'question_details' question.test_id question.id %}">
+            {{ question.question }}
+        </a></div>
+    {% endfor %}
+
+    <br>
+    <div class="row">
+        <div class="col">
+            <form method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary">Add new question</button>
+            </form>
+        </div>
+
+        <div class="col">
+            <form>
+                <input type="hidden" name="create-test" value="on">
+                <button type="submit" class="btn btn-success">Create test</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

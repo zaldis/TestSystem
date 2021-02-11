@@ -14,10 +14,16 @@ class UserDetail(models.Model):
 
 
 class Test(models.Model):
+
+    class TestState(models.TextChoices):
+        CREATING = 'A', 'Creating'
+        CREATED = 'Z', 'Created'
+
     title = models.CharField(max_length=100)
     description = models.TextField()
-    passes = models.PositiveIntegerField()
+    passes = models.PositiveIntegerField(default=0)
     creation_date = models.DateTimeField(auto_now=True)
+    state = models.CharField(max_length=100, choices=TestState.choices, default=TestState.CREATING)
 
     def __str__(self):
         return f"{self.title}: {self.passes}"
@@ -25,7 +31,6 @@ class Test(models.Model):
 
 class Question(models.Model):
     test = models.ForeignKey(Test, on_delete=CASCADE)
-    order = models.PositiveIntegerField()
     question = models.TextField()
 
     def __str__(self):
@@ -35,7 +40,7 @@ class Question(models.Model):
 class Answer(models.Model):
     question = models.ForeignKey(Question, on_delete=CASCADE)
     text = models.TextField()
-    is_correct = models.BooleanField()
+    is_correct = models.BooleanField(default=False)
 
     class Meta:
         unique_together = ('question', 'text')

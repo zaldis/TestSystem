@@ -27,7 +27,11 @@
         <div>accept persentage: </div>
     {% endif %}
 
-    <button class="btn btn-success">Pass test</button>
+    {% if test.state == 'Z' %}
+        <button class="btn btn-success">Pass test</button>
+    {% else %}
+    <a href="{% url 'question_list' test.id %}">Finish test creation</a>
+    {% endif %}
 
     <hr>
 

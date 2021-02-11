@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Creating test:</h1>
+
+    <h2>Enter test information</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div>
+            {{ form.title.error }}
+            <label for="{{ form.title.id_for_label }}">Title</label>
+            <div>
+                {{ form.title }}
+            </div>
+        </div>
+
+        <div>
+            {{ form.description.error }}
+            <label for="{{ form.description.id_for_label }}">Description</label>
+            <div>
+                {{ form.description }}
+            </div>
+        </div>
+
+        <div>
+            <button type="submit" class="btn btn-success">Next</button>
+        </div>
+    </form>
+
+{% endblock %}

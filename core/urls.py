@@ -18,8 +18,15 @@ urlpatterns = [
         path('profile/', views.ProfileView.as_view(), name='profile'),
         path('mytests/', include([
             path('', views.MyTestsView.as_view(), name='mytests'),
-            path('<int:pk>/', views.MyTestDetailsView.as_view(), name='mytest_details'),
-            path('comment/', views.CommentView.as_view(), name='comment')
+            path('<int:pk>/', include([
+                path('', views.MyTestDetailsView.as_view(), name='mytest_details'),
+                path('questions/', include([
+                    path('', views.QuestionListView.as_view(), name='question_list'),
+                    path('<int:question_id>/', views.QuestionDetailView.as_view(), name="question_details"),
+                ])),
+            ])),
+            path('comment/', views.CommentView.as_view(), name='comment'),
+            path('create/', views.MyTestCreateView.as_view(), name="create_test"),
         ])),
     ])),
 ]

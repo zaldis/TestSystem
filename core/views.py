@@ -30,7 +30,7 @@ class ProfileView(LoginRequiredMixin, FormView):
 
     def form_valid(self, form):
         user = self.request.user
-        user_details = user.userdetail_set.first()
+        user_details = user.userdetail
 
         user.first_name = form.cleaned_data['first_name']
         user.last_name = form.cleaned_data['last_name']
@@ -46,7 +46,7 @@ class ProfileView(LoginRequiredMixin, FormView):
 
 class ProfileMediaView(LoginRequiredMixin, View):
     def get(self, request, name):
-        user_detals = request.user.userdetail_set.first()
+        user_detals = request.user.userdetail
         profile_img = user_detals.profile_img
         if name in profile_img.name:
             test_file = open(profile_img.file.name, 'rb')

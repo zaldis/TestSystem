@@ -11,7 +11,21 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 import os
+import environ
 from pathlib import Path
+
+
+env = environ.Env(
+    DB_NAME=(str, ''),
+    DB_USER=(str, ''),
+    DB_PASSWORD=(str, ''),
+    DB_HOST=(str, ''),
+    DB_PORT=(int, 0),
+
+    SECRET_KEY=(str, ''),
+)
+environ.Env.read_env()
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,7 +35,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '#3jzz2b(#l*c2#qcppxl(yff^mze7r08@c34c^!!iriyk^en4g'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -77,11 +91,11 @@ WSGI_APPLICATION = 'myquestions.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-database = "questions"
-user = "postgres"
-password = "secret"
-host = os.environ.get('POSTGRES_HOST', '') or "localhost"
-port = 5433
+database = env('DB_NAME')
+user = env('DB_USER')
+password = env('DB_PASSWORD')
+host = env('DB_HOST')
+port = env('DB_PORT')
 
 DATABASES = {
     'default': {

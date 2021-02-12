@@ -1,0 +1,312 @@
+# Tests
+-   model: core.test
+    pk: 5
+    fields:
+        title: Algebra
+        description: Basic arithmetic
+        passes: 1
+        creation_date: 2021-02-12 10:24:34.656686+00:00
+        state: Z
+-   model: core.test
+    pk: 6
+    fields:
+        title: About me
+        description: Basic test about my biography
+        passes: 1
+        creation_date: 2021-02-12 10:35:23.494223+00:00
+        state: Z
+
+# Questions
+-   model: core.question
+    pk: 8
+    fields:
+        test: 5
+        question: 2 + 3 = ?
+-   model: core.question
+    pk: 9
+    fields:
+        test: 5
+        question: 54 / 9 = ?
+-   model: core.question
+    pk: 10
+    fields:
+        test: 5
+        question: -4 * -8 = ?
+-   model: core.question
+    pk: 11
+    fields:
+        test: 5
+        question: 2 + (2 * 2) = ?
+-   model: core.question
+    pk: 12
+    fields:
+        test: 5
+        question: (2 + 2) * 2
+-   model: core.question
+    pk: 13
+    fields:
+        test: 6
+        question: How old am I?
+-   model: core.question
+    pk: 14
+    fields:
+        test: 6
+        question: What kind of sport do I prefer?
+-   model: core.question
+    pk: 15
+    fields:
+        test: 6
+        question: What is my favorite text editor/IDE?
+-   model: core.question
+    pk: 16
+    fields:
+        test: 6
+        question: What kind of food do I prefer?
+-   model: core.question
+    pk: 17
+    fields:
+        test: 6
+        question: What is my favorite algorithm/data structure?
+
+
+# Answers
+-   model: core.answer
+    pk: 29
+    fields:
+        question: 8
+        text: '3'
+        is_correct: false
+-   model: core.answer
+    pk: 30
+    fields:
+        question: 8
+        text: '5'
+        is_correct: true
+-   model: core.answer
+    pk: 31
+    fields:
+        question: 8
+        text: '-1'
+        is_correct: false
+-   model: core.answer
+    pk: 32
+    fields:
+        question: 8
+        text: '12'
+        is_correct: false
+-   model: core.answer
+    pk: 33
+    fields:
+        question: 9
+        text: '6'
+        is_correct: true
+-   model: core.answer
+    pk: 34
+    fields:
+        question: 9
+        text: '9'
+        is_correct: false
+-   model: core.answer
+    pk: 35
+    fields:
+        question: 9
+        text: '5'
+        is_correct: false
+-   model: core.answer
+    pk: 36
+    fields:
+        question: 9
+        text: '4'
+        is_correct: false
+-   model: core.answer
+    pk: 37
+    fields:
+        question: 10
+        text: '32'
+        is_correct: true
+-   model: core.answer
+    pk: 38
+    fields:
+        question: 10
+        text: '-32'
+        is_correct: false
+-   model: core.answer
+    pk: 39
+    fields:
+        question: 10
+        text: '12'
+        is_correct: false
+-   model: core.answer
+    pk: 40
+    fields:
+        question: 10
+        text: '2'
+        is_correct: false
+-   model: core.answer
+    pk: 41
+    fields:
+        question: 11
+        text: '4'
+        is_correct: false
+-   model: core.answer
+    pk: 42
+    fields:
+        question: 11
+        text: '8'
+        is_correct: false
+-   model: core.answer
+    pk: 43
+    fields:
+        question: 11
+        text: '6'
+        is_correct: true
+-   model: core.answer
+    pk: 44
+    fields:
+        question: 11
+        text: '12'
+        is_correct: false
+-   model: core.answer
+    pk: 45
+    fields:
+        question: 12
+        text: '4'
+        is_correct: false
+-   model: core.answer
+    pk: 46
+    fields:
+        question: 12
+        text: '6'
+        is_correct: false
+-   model: core.answer
+    pk: 47
+    fields:
+        question: 12
+        text: '8'
+        is_correct: true
+-   model: core.answer
+    pk: 48
+    fields:
+        question: 12
+        text: '12'
+        is_correct: false
+-   model: core.answer
+    pk: 49
+    fields:
+        question: 13
+        text: '20'
+        is_correct: false
+-   model: core.answer
+    pk: 50
+    fields:
+        question: 13
+        text: '21'
+        is_correct: true
+-   model: core.answer
+    pk: 51
+    fields:
+        question: 13
+        text: '24'
+        is_correct: false
+-   model: core.answer
+    pk: 52
+    fields:
+        question: 13
+        text: '23'
+        is_correct: false
+-   model: core.answer
+    pk: 53
+    fields:
+        question: 14
+        text: ski, wrestling
+        is_correct: true
+-   model: core.answer
+    pk: 54
+    fields:
+        question: 14
+        text: chess, ping-pong
+        is_correct: false
+-   model: core.answer
+    pk: 55
+    fields:
+        question: 14
+        text: swimming, volleyball
+        is_correct: false
+-   model: core.answer
+    pk: 56
+    fields:
+        question: 14
+        text: basketball, football
+        is_correct: false
+-   model: core.answer
+    pk: 57
+    fields:
+        question: 15
+        text: PyCharm
+        is_correct: false
+-   model: core.answer
+    pk: 58
+    fields:
+        question: 15
+        text: VS Code
+        is_correct: false
+-   model: core.answer
+    pk: 59
+    fields:
+        question: 15
+        text: Vim, Nvim
+        is_correct: true
+-   model: core.answer
+    pk: 60
+    fields:
+        question: 15
+        text: Atom
+        is_correct: false
+-   model: core.answer
+    pk: 61
+    fields:
+        question: 16
+        text: rice
+        is_correct: true
+-   model: core.answer
+    pk: 62
+    fields:
+        question: 16
+        text: pizza
+        is_correct: false
+-   model: core.answer
+    pk: 63
+    fields:
+        question: 16
+        text: ramen
+        is_correct: false
+-   model: core.answer
+    pk: 64
+    fields:
+        question: 16
+        text: soups
+        is_correct: false
+-   model: core.answer
+    pk: 65
+    fields:
+        question: 17
+        text: Brodal's and Okasaki's Priority Queue
+        is_correct: false
+-   model: core.answer
+    pk: 66
+    fields:
+        question: 17
+        text: Suffix tree
+        is_correct: false
+-   model: core.answer
+    pk: 67
+    fields:
+        question: 17
+        text: Heap sort
+        is_correct: false
+-   model: core.answer
+    pk: 68
+    fields:
+        question: 17
+        text: 'Delaunay triangulation '
+        is_correct: true

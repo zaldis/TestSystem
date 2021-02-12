@@ -23,14 +23,16 @@
     </div>
 
 
-    {% if test.passes > 0 %}
-        <div>accept persentage: </div>
+    {% if test_result %}
+        <div> Passed date: {{ test_result.passed_date }} </div>
+        <div> Correct answers: {{ test_result.corrects }} / {{ test_result.total }} </div>
+        <div> Correct percent: {{ correct_percent|floatformat:"-1" }}% </div>
     {% endif %}
 
     {% if test.state == 'Z' %}
-        <button class="btn btn-success">Pass test</button>
+        <a href="{% url 'running_test' test.id %}">Pass test</a>
     {% else %}
-    <a href="{% url 'question_list' test.id %}">Finish test creation</a>
+        <a href="{% url 'question_list' test.id %}">Finish test creation</a>
     {% endif %}
 
     <hr>

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<h1>Hooorey, you passed the test</h1>
+
+<div> You results: </div>
+<div> Total questions: {{ total }} </div>
+<div> Correct answers: {{ corrects }} </div>
+<div> Correct percent: {{ percent|floatformat:"-1" }}% </div>
+
+<a href="{{ next_link }}">Go to test details</a>
+{% endblock %}

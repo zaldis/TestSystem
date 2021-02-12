@@ -29,6 +29,17 @@ class Test(models.Model):
         return f"{self.title}: {self.passes}"
 
 
+class TestResult(models.Model):
+    user = models.ForeignKey(User, on_delete=CASCADE)
+    test = models.ForeignKey(Test, on_delete=CASCADE)
+    total = models.PositiveIntegerField()
+    corrects = models.PositiveIntegerField()
+    passed_date = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user}| {self.test.title}| {self.corrects}/{self.total}"
+
+
 class Question(models.Model):
     test = models.ForeignKey(Test, on_delete=CASCADE)
     question = models.TextField()

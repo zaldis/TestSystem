@@ -6,7 +6,7 @@ from django.urls.base import reverse
 from django.views.generic import TemplateView, FormView, ListView, DetailView
 from django.views import View
 
-from core.models import Answer, Comment, Question, Test, UserDetail
+from core.models import Answer, Comment, Question, Test, TestResult, UserDetail
 from .forms import CommentForm, ProfileForm, QuestionForm, QuestionFormSet, TestForm
 from .mixins import ClientZoneMixin
 
@@ -169,7 +169,58 @@ class MyTestDetailsView(LoginRequiredMixin, DetailView):
         comments = self.object.comment_set.all().order_by('-creation_date')
         context = super().get_context_data(**kwargs)
         context['comments'] = comments
+
+        test_results = TestResult.objects.filter(
+            user=self.request.user,
+            test=self.get_object(),
+        ).order_by('-passed_date')
+        if test_results.exists():
+            test_result = test_results.first()
+            context['test_result'] = test_result
+            context['correct_percent'] = 100 * test_result.corrects / test_result.total
         return context
+
+
+class RunningTestView(LoginRequiredMixin, TemplateView):
+    template_name = 'accounts/running_test.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        test = self._get_test()
+        questions = test.question_set.all()
+
+        context['test'] = test
+        context['questions'] = questions
+
+        return context
+
+    def post(self, request, *args, **kwargs):
+        corrects = 0
+        for field, value in request.POST.items():
+            if 'answer-for' in field:
+                answer = Answer.objects.get(id=value)
+                corrects += answer.is_correct
+        test = self._get_test()
+        total = test.question_set.count()
+        percent = 100 * corrects / total;
+
+        test.passes += 1
+        test.save()
+
+        TestResult.objects.create(
+            user=self.request.user, test=test, corrects=corrects, total=total)
+
+        return render(
+            request=request,
+            template_name='accounts/finish_test.html',
+            context = {
+                'total': total, 'corrects': corrects, 'percent': percent,
+                'next_link': reverse('mytest_details', args=[test.id])
+            }
+        )
+
+    def _get_test(self):
+        return Test.objects.get(id=self.kwargs['pk'])
 
 
 class CommentView(LoginRequiredMixin, FormView):

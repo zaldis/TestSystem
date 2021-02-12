@@ -90,21 +90,14 @@ WSGI_APPLICATION = 'myquestions.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-
-database = env('DB_NAME')
-user = env('DB_USER')
-password = env('DB_PASSWORD')
-host = env('DB_HOST')
-port = env('DB_PORT')
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': database,
-        'USER': user,
-        'PASSWORD': password,
-        'HOST': host,
-        'PORT': port,
+        'NAME': env('DB_NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASSWORD'),
+        'HOST': env('DB_HOST'),
+        'PORT': env('DB_PORT')
     }
 }
 

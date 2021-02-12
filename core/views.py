@@ -171,7 +171,7 @@ class MyTestDetailsView(LoginRequiredMixin, DetailView):
         context['comments'] = comments
 
         test_results = TestResult.objects.filter(
-            user=self.request.user,
+            user_detail=self.request.user.userdetail,
             test=self.get_object(),
         ).order_by('-passed_date')
         if test_results.exists():
@@ -208,7 +208,7 @@ class RunningTestView(LoginRequiredMixin, TemplateView):
         test.save()
 
         TestResult.objects.create(
-            user=self.request.user, test=test, corrects=corrects, total=total)
+            user_detail=self.request.user.userdetail, test=test, corrects=corrects, total=total)
 
         return render(
             request=request,

@@ -4,7 +4,7 @@ from django.db.models.deletion import CASCADE
 
 
 class UserDetail(models.Model):
-    user = models.ForeignKey(User, on_delete=CASCADE)
+    user = models.OneToOneField(User, on_delete=CASCADE)
     birthday = models.DateField(blank=True, null=True)
     profile_img = models.ImageField(upload_to='profile', blank=True, null=True)
     about_me = models.TextField(blank=True, null=True)
@@ -30,14 +30,14 @@ class Test(models.Model):
 
 
 class TestResult(models.Model):
-    user = models.ForeignKey(User, on_delete=CASCADE)
+    user_detail = models.ForeignKey(UserDetail, on_delete=CASCADE)
     test = models.ForeignKey(Test, on_delete=CASCADE)
     total = models.PositiveIntegerField()
     corrects = models.PositiveIntegerField()
     passed_date = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.user}| {self.test.title}| {self.corrects}/{self.total}"
+        return f"{self.user_detail.user}| {self.test.title}| {self.corrects}/{self.total}"
 
 
 class Question(models.Model):

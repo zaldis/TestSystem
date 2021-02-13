@@ -1,4 +1,6 @@
+from django.contrib.auth import authenticate
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
 from django.contrib.auth.views import logout_then_login
 from django.http.response import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
@@ -7,7 +9,7 @@ from django.views.generic import TemplateView, FormView, ListView, DetailView
 from django.views import View
 
 from core.models import Answer, Comment, Question, Test, TestResult, UserDetail
-from .forms import CommentForm, ProfileForm, QuestionForm, QuestionFormSet, TestForm
+from .forms import CommentForm, ProfileForm, RegisterForm, TestForm
 from .mixins import ClientZoneMixin
 
 
@@ -24,7 +26,7 @@ class ProfileView(LoginRequiredMixin, FormView):
         context = super().get_context_data(**kwargs)
         context['user'] = self.request.user
 
-        details = UserDetail.objects.get(user=self.request.user)
+        details = UserDetail.objects.get_or_create(user=self.request.user)[0]
         context['user_details'] = details
         return context
 
@@ -244,9 +246,22 @@ class CommentView(LoginRequiredMixin, FormView):
         )
 
 
+class RegisterView(TemplateView):
+    template_name = 'registration/register.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['register_form'] = RegisterForm()
+        return context
+
+    def post(self, request, *args, **kwargs):
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            user = User.objects.create_user(**form.cleaned_data)
+            authenticate(**form.cleaned_data)
+            return redirect(reverse('profile'))
+        return render(request, self.template_name, {'register_form': form})
+
+
 def logout(request):
     return logout_then_login(request)
-
-
-def register_view(request):
-    return HttpResponse('Registration ...')

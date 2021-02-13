@@ -12,7 +12,7 @@ class TestResultAdmin(admin.TabularInline):
         return False
 
     def percent(self, obj):
-        return f'{100 * obj.corrects / obj.total}%'
+        return f'{100 * obj.corrects / obj.total:.1f}%'
 
 
 @admin.register(UserDetail)

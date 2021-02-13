@@ -1,6 +1,19 @@
-from core.models import Question, Test
+from django.core.exceptions import ValidationError
+from django.contrib.auth.models import User
+from core.models import Test
 from django import forms
-from django.forms import formset_factory
+
+
+class RegisterForm(forms.Form):
+    username = forms.CharField(max_length=100)
+    email = forms.EmailField()
+    password = forms.CharField(widget=forms.PasswordInput())
+
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        if User.objects.filter(username=username).exists():
+            raise ValidationError(f'User with username {username} already exists')
+        return username
 
 
 class ProfileForm(forms.Form):
@@ -14,14 +27,6 @@ class ProfileForm(forms.Form):
 class CommentForm(forms.Form):
     test_id = forms.IntegerField()
     text = forms.CharField()
-
-
-class QuestionForm(forms.ModelForm):
-    class Meta:
-        model = Question
-        exclude = ('test', )
-
-QuestionFormSet = formset_factory(QuestionForm, min_num=5)
 
 
 class TestForm(forms.ModelForm):

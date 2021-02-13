@@ -11,7 +11,7 @@ urlpatterns = [
     ])),
     path('login/', auth_views.LoginView.as_view(), name='login'),
     path('logout/', views.logout, name='logout'),
-    path('register/', views.register_view, name='register'),
+    path('register/', views.RegisterView.as_view(), name='register'),
 
     path('accounts/', include([
         path('profile/', views.ProfileView.as_view(), name='profile'),

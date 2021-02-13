@@ -23,6 +23,8 @@ env = environ.Env(
     DB_PORT=(int, 0),
 
     SECRET_KEY=(str, ''),
+    FACEBOOK_KEY=(int, 0),
+    FACEBOOK_SECRET=(str, ''),
 )
 environ.Env.read_env()
 
@@ -53,6 +55,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'sslserver',
+    'social_django',
     'core',
 ]
 
@@ -100,6 +104,16 @@ DATABASES = {
         'PORT': env('DB_PORT')
     }
 }
+
+
+# Auth
+AUTHENTICATION_BACKENDS = [
+    'social_core.backends.facebook.FacebookOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+SOCIAL_AUTH_FACEBOOK_KEY = env('FACEBOOK_KEY')
+SOCIAL_AUTH_FACEBOOK_SECRET = env('FACEBOOK_SECRET')
 
 
 # Password validation

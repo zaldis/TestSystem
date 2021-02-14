@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 
 
+{% block title %}On testing{% endblock %}
+
+
 {% block content %}
     <h1>Working on test: {{ test.title }}</h1>
 
@@ -8,17 +11,18 @@
         {% csrf_token %}
         {% for question in questions %}
             <label>Question {{ forloop.counter }}</label>
-            <textarea disabled>{{ question.question }}</textarea>
+            <textarea class="form-control" disabled>{{ question.question }}</textarea>
 
             <div>Answers</div>
             {% for answer in question.answer_set.all %}
-                <div>
+                <div class="form-group">
                     <input type="radio" name="answer-for-{{ question.id }}" value="{{ answer.id }}">
-                    <input type="text" value="{{ answer.text }}" disabled>
+                    <input type="text" value="{{ answer.text }}" disabled class="form-control">
                 </div>
             {% endfor %}
+            <br><hr><br>
         {% endfor %}
 
-        <button type="submit">End test</button>
+        <button type="submit" class="btn btn-primary">End test</button>
     </form>
 {% endblock %}

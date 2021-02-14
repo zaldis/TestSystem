@@ -16,28 +16,7 @@
         </title>
     </head>
     <body>
-        {% if user.is_authenticated %}
-            <div style="display: flex">
-                <span>Hello, {{ user.username }}</span>
-
-                <form action="{% url 'create_test' %}">
-                    <button type="submit" class="btn btn-primary">Create test</button>
-                </form>
-
-                <form action="{% url 'mytests' %}">
-                    <input type="hidden" name="client_zone" class="timezone">
-                    <button type="submit" class="btn btn-primary">Tests</button>
-                </form>
-
-                <form action="{% url 'profile' %}">
-                    <button type="submit" class="btn btn-primary">Profile</button>
-                </form>
-
-                <form action="{% url 'logout' %}">
-                    <button type="submit" class="btn btn-primary">Log out</button>
-                </form>
-            </div>
-        {% endif %}
+        {% include "snippets/navbar.html" with user=user %}
 
         <div class="container">
             {% block content %} {% endblock %}

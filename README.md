@@ -9,3 +9,6 @@ Simple system for test design
 3. Sync db: `./manage.py migrate`
 4. Install python packages: `pip install -r requirements.txt`
 5. Run server: `./manage.py runsslserver`
+
+You also can start application via docker-compose:
+Run command: `docker-compose up` from root folder.

@@ -2,21 +2,48 @@ version: "3.7"
 
 services:
   db:
-    container_name: questions-db
     image: postgres
+    container_name: questions-db
     volumes:
       - db-data:/var/lib/postgresql/data
     ports:
-      - 5433:5432
+      - 5432:5432
     restart: on-failure
     environment:
       POSTGRES_DB: questions
-      POSTGRES_HOST: localhost
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: secret
-      POSTGRES_PORT: 5433
+      POSTGRES_PORT: 5432
     healthcheck:
       test: "exit 0"
+
+  migration:
+    build: .
+    command: python manage.py migrate
+    depends_on:
+        - db
+
+  web:
+    build: .
+    command: python manage.py runsslserver 0.0.0.0:8000 --noreload
+    environment:
+        DB_NAME: questions
+        DB_USER: postgres
+        DB_PASSWORD: secret
+        DB_HOST: db
+        DB_PORT: 5432
+
+        SECRET_KEY: "#3jzz2b(#l*c2#qcppxl(yff^mze7r08@c34c^!!iriyk^en4g"
+
+        FACEBOOK_KEY: 282839893353837
+        FACEBOOK_SECRET: '71132f2be2ce5c547411ba1978452c9d'
+    volumes:
+        - .:/code/
+    ports:
+        - 8000:8000
+    depends_on:
+        - migration
+
 
 volumes:
   db-data:
